@@ -1,6 +1,30 @@
+const POINTS_TO_WIN = 5;
+
+const rockBtn = document.getElementById("rock");
+const paperBtn = document.getElementById("paper");
+const scissorsBtn = document.getElementById("scissors");
+const roundResultDiv = document.getElementById("round-result-div");
+const scoreDiv = document.getElementById("score-div");
+const finalResultDiv = document.getElementById("final-result-div");
+
 let humanScore = 0;
 let computerScore = 0;
+let humanChoice = null;
 
+rockBtn.onclick = () => { 
+    playRound("rock", getComputerChoice());
+    showOutput();
+}
+
+paperBtn.onclick = () => { 
+    playRound("paper", getComputerChoice());
+    showOutput();
+}
+
+scissorsBtn.onclick = () => { 
+    playRound("scissors", getComputerChoice());
+    showOutput();
+}
 
 function getHumanChoice() {
     const humanChoice = prompt("Your choice:");
@@ -17,7 +41,6 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    humanChoice = humanChoice.toLowerCase();
     
     if (humanChoice === "rock") {
         
@@ -28,7 +51,7 @@ function playRound(humanChoice, computerChoice) {
         } else if (computerChoice === "scissors") {
             humanWins();
         } else {
-            console.error("This should never happen...");
+            unreachable();
         }
 
     } else if(humanChoice === "paper") {
@@ -40,7 +63,7 @@ function playRound(humanChoice, computerChoice) {
         } else if (computerChoice === "scissors") {
             computerWins();
         } else {
-            console.error("This should never happen...");
+            unreachable();
         }
         
     } else if(humanChoice === "scissors") {
@@ -52,42 +75,48 @@ function playRound(humanChoice, computerChoice) {
         } else if (computerChoice === "scissors") {
             draw();
         } else {
-            console.error("This should never happen...");
+            unreachable();
         }
         
     } else {
-        console.error("Invalid choice!");
+        unreachable();
     }
 }
 
 function humanWins() {
-    console.log("Human wins!")
+    roundResultDiv.innerText = "Human wins the round!";
     humanScore++;
 }
 
 function computerWins() {
-    console.log("Computer wins!")
+    roundResultDiv.innerText = "Computer wins the round!";
     computerScore++;
 }
 
 function draw() {
-    console.log("It's a draw!")
+    roundResultDiv.innerText = "It's a draw!";
 }
 
-function printScore(humanScore, computerScore) {
-    console.log("Human: " + humanScore + "\tComputer: " + computerScore);
+function unreachable() {
+    throw Error("This should never happen...");
 }
 
-function playGame() {
-    const ngames = 5;
-    for (let i = 0; i < ngames; i++) {
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
-        playRound(humanChoice, computerChoice);
-        printScore(humanScore, computerScore)
+function showOutput() {
+    scoreDiv.innerText = "Human: " + humanScore + "\tComputer: " + computerScore;
+
+    if (humanScore === POINTS_TO_WIN) {
+        finalResultDiv.innerText = "Human wins!";
+        disableInputs();
+    } else if(computerScore === POINTS_TO_WIN) {
+        finalResultDiv.innerText = "Computer wins!";
+        disableInputs();
+    } else {
+        unreachable();
     }
-    console.log("Final score: ")
-    printScore(humanScore, computerScore)
 }
 
-playGame();
+function disableInputs() {
+    rockBtn.disabled = true;
+    paperBtn.disabled = true;
+    scissorsBtn.disabled = true;
+}
