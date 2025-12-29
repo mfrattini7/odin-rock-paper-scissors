@@ -11,17 +11,17 @@ let humanScore = 0;
 let computerScore = 0;
 let humanChoice = null;
 
-rockBtn.onclick = () => { 
+rockBtn.onclick = () => {
     playRound("rock", getComputerChoice());
     showOutput();
 }
 
-paperBtn.onclick = () => { 
+paperBtn.onclick = () => {
     playRound("paper", getComputerChoice());
     showOutput();
 }
 
-scissorsBtn.onclick = () => { 
+scissorsBtn.onclick = () => {
     playRound("scissors", getComputerChoice());
     showOutput();
 }
@@ -41,9 +41,9 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    
+
     if (humanChoice === "rock") {
-        
+
         if (computerChoice === "rock") {
             draw()
         } else if (computerChoice === "paper") {
@@ -54,7 +54,7 @@ function playRound(humanChoice, computerChoice) {
             unreachable();
         }
 
-    } else if(humanChoice === "paper") {
+    } else if (humanChoice === "paper") {
 
         if (computerChoice === "rock") {
             humanWins();
@@ -65,8 +65,8 @@ function playRound(humanChoice, computerChoice) {
         } else {
             unreachable();
         }
-        
-    } else if(humanChoice === "scissors") {
+
+    } else if (humanChoice === "scissors") {
 
         if (computerChoice === "rock") {
             computerWins();
@@ -77,7 +77,7 @@ function playRound(humanChoice, computerChoice) {
         } else {
             unreachable();
         }
-        
+
     } else {
         unreachable();
     }
@@ -107,7 +107,7 @@ function showOutput() {
     if (humanScore === POINTS_TO_WIN) {
         finalResultDiv.innerText = "Human wins!";
         disableInputs();
-    } else if(computerScore === POINTS_TO_WIN) {
+    } else if (computerScore === POINTS_TO_WIN) {
         finalResultDiv.innerText = "Computer wins!";
         disableInputs();
     } else {
